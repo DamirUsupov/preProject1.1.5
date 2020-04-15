@@ -42,15 +42,18 @@ public class UserDAO {
     }
 
     public void updateUser(Long id, String email, String name, String pass) {
-        Query q = session.createQuery("update User set email = :emailPrm, name = :namePrm, pass = :passPrm where id = :idPrm").
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("update User set email = :emailPrm, " +
+                                                                "name = :namePrm, " +
+                                                                "pass = :passPrm where id = :idPrm").
                 setParameter("idPrm", id).
                 setParameter("emailPrm", email).
                 setParameter("namePrm", name).
                 setParameter("passPrm", pass);
         q.executeUpdate();
+        tx.commit();
         session.close();
     }
-
 
 
     public List<User> getAllUsers() {
