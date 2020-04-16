@@ -1,60 +1,71 @@
 package service;
 
-import DAO.UserDAO;
+import DAO.UserHibernateDAO;
 import model.User;
-import org.hibernate.SessionFactory;
-import util.DBHelper;
 
 import java.util.List;
 
 public class UserService {
     private static UserService userService;
 
-    private SessionFactory sessionFactory;
-
     private UserService() {
 
     }
 
-    private UserService(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
     public static UserService getInstance() {
+
         if (userService == null) {
-            userService = new UserService(DBHelper.getSessionFactory());
+            userService = new UserService();
         }
         return userService;
     }
 
-    public void updateUser(Long id, String email, String name, String pass) {
-        new UserDAO(sessionFactory.openSession()).updateUser(id, email, name, pass);
+   /* public UsersDAO usersDAO() {
+        try {
+            if (s.equals("hib")) {
+                userDAO = new UserHibernateDAO(sessionFactory.openSession());
+            } else {
+                userDAO = new UserJdbcDAO(sessionFactory.openSession());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return (UsersDAO) userDAO;
+    }*/
+
+    public void updateUser(Long id, User user) {
+
+        UserHibernateDAO.getInstance().updateUser(id, user);
+
     }
 
     public void addUser(User user) {
-        new UserDAO(sessionFactory.openSession()).addUser(user);
+
+        UserHibernateDAO.getInstance().addUser(user);
+
     }
 
     public List<User> getAllUsers() {
-        return new UserDAO(sessionFactory.openSession()).getAllUsers();
+
+        return UserHibernateDAO.getInstance().getAllUsers();
+
     }
 
     public void deleteUser(User user) {
-        new UserDAO(sessionFactory.openSession()).deleteUser(user);
-    }
 
-
-    public void changeUser(User oldUser, User newUser) {
-
-        new UserDAO(sessionFactory.openSession()).changeUser(oldUser, newUser);
+        UserHibernateDAO.getInstance().deleteUser(user);
 
     }
 
     public User getUserById(Long id) {
-        return new UserDAO(sessionFactory.openSession()).getUserById(id);
+
+        return UserHibernateDAO.getInstance().getUserById(id);
+
     }
 
-    public Long getUserId(String email, String name, String pass) {
-        return new UserDAO(sessionFactory.openSession()).getUserId(email, name, pass);
+    public Long getUserId(User user) {
+
+        return UserHibernateDAO.getInstance().getUserId(user);
+
     }
 }

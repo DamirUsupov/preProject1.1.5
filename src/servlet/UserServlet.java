@@ -46,6 +46,8 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                 Long id = Long.parseLong(request.getParameter("delete"));
                 User user = UserService.getInstance().getUserById(id);
                 UserService.getInstance().deleteUser(user);
+                String redirectURL = "users/del";
+                getTable(request, response, redirectURL);
 
             } else if (request.getParameter("update") != null) {
 
@@ -68,13 +70,10 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
                 String pass = request.getParameter("pass");
                 Long id = Long.valueOf(request.getParameter("id"));
 
-                UserService.getInstance().updateUser(id, email, name, pass);
+                UserService.getInstance().updateUser(id, new User(email, name, pass));
 
+                getTable(request, response, "users/");
 
-                List<User> users = UserService.getInstance().getAllUsers();
-                request.setAttribute("users", users);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher(jsp);
-                requestDispatcher.forward(request, response);
             }
 
         } catch (Exception e) {
@@ -83,12 +82,17 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
 
         }
 
+        getTable(request, response, "users/");
+
+
+    }
+
+    private void getTable(HttpServletRequest request, HttpServletResponse response, String redirectUrl) throws ServletException, IOException {
+
         List<User> users = UserService.getInstance().getAllUsers();
         request.setAttribute("users", users);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(jsp);
         requestDispatcher.forward(request, response);
-
-
     }
 
 
