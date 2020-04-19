@@ -2,6 +2,7 @@ package DAO;
 
 import model.User;
 import org.hibernate.Session;
+import util.DBHelper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,14 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserJdbcDAO implements UserDAO {
-    private Connection connection;
-    private Session    session;
+    private static Session    session;
+    private static UserJdbcDAO userJdbcDAO;
+    private        Connection connection;
 
-
-    public UserJdbcDAO(Session session) {
-        this.session = session;
+    public UserJdbcDAO(Connection connection) {
+        this.connection = connection;
     }
 
+    public static UserJdbcDAO getInstance() throws SQLException {
+        if (userJdbcDAO == null) {
+            userJdbcDAO = new UserJdbcDAO(DBHelper.getConnection());
+        }
+        return userJdbcDAO;
+    }
     @Override
     public void addUser(User user) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("insert into user(email, name, pass) values (?, ?, ?)");

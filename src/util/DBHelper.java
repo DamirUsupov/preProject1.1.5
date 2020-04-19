@@ -6,8 +6,32 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
 public class DBHelper {
+    static Properties properties = new Properties();
+
     private static SessionFactory sessionFactory;
+    private static DBHelper       dbHelper;
+
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/pp?serverTimezone=UTC",
+                "root",
+                "1234");
+    }
+   /* public static DBHelper getInstance() {
+
+
+    }
+
+
+
+    public static Configuration getConfiguration() {
+
+    }*/
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {

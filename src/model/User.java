@@ -20,6 +20,9 @@ public class User {
     @Column(name = "pass")
     private String pass;
 
+    @Column(name = "role")
+    private String role;
+
     public User() {
 
     }
@@ -70,5 +73,12 @@ public class User {
         this.name = name;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String id) {
+        this.role = role;
+    }
 
 }
