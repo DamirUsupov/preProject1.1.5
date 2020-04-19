@@ -19,12 +19,12 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     public static UserHibernateDAO getInstance() {
+
         if (userHibernateDAO == null) {
-
             userHibernateDAO = new UserHibernateDAO(DBHelper.getSessionFactory());
-
         }
         return userHibernateDAO;
+
     }
     @Override
     public void addUser(User user) {
