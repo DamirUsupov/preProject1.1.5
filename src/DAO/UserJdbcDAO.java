@@ -19,7 +19,7 @@ public class UserJdbcDAO implements UserDAO {
         this.connection = connection;
     }
 
-    public static UserJdbcDAO getInstance() throws SQLException {
+    public static UserDAO getInstanceUserDAO() {
         if (userJdbcDAO == null) {
             userJdbcDAO = new UserJdbcDAO(DBHelper.getConnection());
         }
@@ -28,7 +28,7 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public void addUser(User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("insert into user(email, name, pass) values (?, ?, ?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO user(email, name, pass) VALUES (?, ?, ?)");
         statement.setString(1, user.getEmail());
         statement.setString(2, user.getName());
         statement.setString(3, user.getPass());
@@ -50,7 +50,7 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public void updateUser(Long id, User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("update from user set email = ?, name = ?, pass = ? where id = ?");
+        PreparedStatement statement = connection.prepareStatement("UPDATE user SET email = ?, name = ?, pass = ? WHERE id = ?");
         statement.setString(1, user.getEmail());
         statement.setString(2, user.getName());
         statement.setString(3, user.getPass());
@@ -67,7 +67,9 @@ public class UserJdbcDAO implements UserDAO {
         List<User> usersLst = new ArrayList<>();
 
         while (rs.next()) {
-            usersLst.add(new User(rs.getString("email"),
+            usersLst.add(new User(
+                    rs.getLong("id"),
+                    rs.getString("email"),
                     rs.getString("name"),
                     rs.getString("pass")));
         }
@@ -77,7 +79,7 @@ public class UserJdbcDAO implements UserDAO {
 
     }
 
-    @Override
+    /*@Override
     public Long getUserId(User user) throws SQLException {
 
         String query = "SELECT id FROM user WHERE email = ? AND name = ? AND pass = ?";
@@ -91,16 +93,17 @@ public class UserJdbcDAO implements UserDAO {
         result.close();
         statement.close();
         return id;
-    }
+    }*/
 
     @Override
     public User getUserById(Long id) throws SQLException {
-        String query = "select * from user where id = ?";
+
+        String query = "SELECT * FROM user WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, id);
         ResultSet rs = statement.executeQuery();
         rs.next();
-        return new User(rs.getString(2), rs.getString(3), rs.getString(4));
+        return new User(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4));
 
     }
 

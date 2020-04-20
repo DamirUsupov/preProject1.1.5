@@ -24,7 +24,8 @@
             top: 0;
             width: 90%;
         }
-        p{
+
+        p {
             padding-left: 10px;
         }
 
@@ -39,7 +40,10 @@
         <p><input name="name">
         <p><label>Password</label>
         <p><input name="pass">
-        <p><button href="/reg" name="reg" value="1">Register</button>
+        <p>
+            <button href="/reg" name="reg" value="1">
+                Register
+            </button>
     </form>
 </div>
 

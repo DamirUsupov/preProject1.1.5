@@ -7,18 +7,29 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBHelper {
 
     private static SessionFactory sessionFactory;
-    private static DBHelper       dbHelper;
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/pp?serverTimezone=UTC",
-                "root",
-                "1234");
+    public static Connection getConnection(){
+
+        try {
+
+            DriverManager.registerDriver((Driver) Class.forName("com.mysql.cj.jdbc.Driver").newInstance());
+            String url = "jdbc:mysql://localhost:3306/pp?user=root&password=1234&serverTimezone=UTC";
+            return DriverManager.getConnection(url);
+
+        } catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+
+            e.printStackTrace();
+            throw new IllegalStateException();
+
+        }
+
     }
 
     public static Configuration getConfiguration() {

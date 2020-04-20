@@ -27,6 +27,7 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
             throwables.printStackTrace();
         }
 
+
     }
 
     @Override
@@ -36,18 +37,25 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
         String name = request.getParameter("name");
         String pass = request.getParameter("pass");
 
-        if (!email.equals("") && !name.equals("") && !pass.equals(""))
-            UserService.getInstance().addUser(new User(email, name, pass));
+        if (!email.equals("") && !name.equals("") && !pass.equals("")) {
 
+            try {
+                UserService.getInstance().addUser(new User(email, name, pass));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+        }
         try {
             getTable(request, response);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
+
     }
 
-    private void getTable(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+    private void getTable(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, ServletException {
 
         List<User> users = UserService.getInstance().getAllUsers();
         request.setAttribute("users", users);

@@ -5,7 +5,9 @@ import model.User;
 import java.sql.SQLException;
 import java.util.List;
 
-interface UserDAO {
+public interface UserDAO {
+
+
 
     void addUser(User user) throws SQLException;
 
@@ -15,7 +17,9 @@ interface UserDAO {
 
     List<User> getAllUsers() throws SQLException;
 
-    Long getUserId(User user) throws SQLException;
+   // Long getUserId(User user) throws SQLException;
 
     User getUserById(Long id) throws SQLException;
+
+    //void updateUser(Long id, User user);
 }

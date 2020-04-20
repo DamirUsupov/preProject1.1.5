@@ -18,7 +18,7 @@ public class UserHibernateDAO implements UserDAO {
         session = sessionFactory.openSession();
     }
 
-    public static UserHibernateDAO getInstance() {
+    public static UserDAO getInstanceUserDAO() {
 
         if (userHibernateDAO == null) {
             userHibernateDAO = new UserHibernateDAO(DBHelper.getSessionFactory());
@@ -51,7 +51,8 @@ public class UserHibernateDAO implements UserDAO {
         Transaction tx = session.beginTransaction();
         Query q = session.createQuery("update User set email = :emailPrm, " +
                 "name = :namePrm, " +
-                "pass = :passPrm where id = :idPrm").
+                "pass = :passPrm " +
+                "where id = :idPrm").
                 setParameter("idPrm", id).
                 setParameter("emailPrm", user.getEmail()).
                 setParameter("namePrm", user.getName()).
@@ -69,7 +70,7 @@ public class UserHibernateDAO implements UserDAO {
         return q.list();
     }
 
-    @Override
+    /*@Override
     public Long getUserId(User user) {
 
         Query q = session.createQuery("from User WHERE email = :emailPrm and name = :namePrm and pass = :passPrm").
@@ -79,7 +80,7 @@ public class UserHibernateDAO implements UserDAO {
         User userWithId = (User) q.uniqueResult();
         return userWithId.getId();
 
-    }
+    }*/
 
     @Override
     public User getUserById(Long id) {
@@ -90,5 +91,6 @@ public class UserHibernateDAO implements UserDAO {
         return (User) q.uniqueResult();
 
     }
+
 
 }
