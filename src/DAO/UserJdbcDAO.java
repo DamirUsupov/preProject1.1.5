@@ -1,7 +1,6 @@
 package DAO;
 
 import model.User;
-import org.hibernate.Session;
 import util.DBHelper;
 
 import java.sql.Connection;
@@ -12,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserJdbcDAO implements UserDAO {
-    private static Session    session;
+
     private static UserJdbcDAO userJdbcDAO;
-    private        Connection connection;
+    private        Connection  connection;
 
     public UserJdbcDAO(Connection connection) {
         this.connection = connection;
@@ -26,6 +25,7 @@ public class UserJdbcDAO implements UserDAO {
         }
         return userJdbcDAO;
     }
+
     @Override
     public void addUser(User user) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("insert into user(email, name, pass) values (?, ?, ?)");
@@ -39,11 +39,11 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public void deleteUser(User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("delete from user where email = ?, name = ?, pass = ?");
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM user WHERE email = ? AND name = ? AND pass = ?");
         statement.setString(1, user.getEmail());
         statement.setString(2, user.getName());
         statement.setString(3, user.getPass());
-        statement.execute();
+        statement.executeUpdate();
         statement.close();
 
     }
@@ -80,7 +80,7 @@ public class UserJdbcDAO implements UserDAO {
     @Override
     public Long getUserId(User user) throws SQLException {
 
-        String query = "SELECT id FROM user WHERE email = ?, name = ?, pass = ?";
+        String query = "SELECT id FROM user WHERE email = ? AND name = ? AND pass = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, user.getEmail());
         statement.setString(2, user.getName());

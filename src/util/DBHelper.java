@@ -9,10 +9,8 @@ import org.hibernate.service.ServiceRegistry;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 
 public class DBHelper {
-    static Properties properties = new Properties();
 
     private static SessionFactory sessionFactory;
     private static DBHelper       dbHelper;
@@ -22,38 +20,10 @@ public class DBHelper {
                 "root",
                 "1234");
     }
-   /* public static DBHelper getInstance() {
-
-
-    }
-
-
 
     public static Configuration getConfiguration() {
-
-    }*/
-
-    public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
-            sessionFactory = createSessionFactory();
-        }
-        return sessionFactory;
-    }
-
-    private static SessionFactory createSessionFactory() {
-
-        Configuration configuration = getMySqlConfiguration();
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
-        builder.applySettings(configuration.getProperties());
-        ServiceRegistry serviceRegistry = builder.build();
-        return configuration.buildSessionFactory(serviceRegistry);
-
-    }
-
-    private static Configuration getMySqlConfiguration() {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(User.class);
-
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
@@ -66,5 +36,23 @@ public class DBHelper {
         configuration.setProperty("hibernate.hbm2ddl.auto", "update");
         return configuration;
     }
+
+    public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            sessionFactory = createSessionFactory();
+        }
+        return sessionFactory;
+    }
+
+    private static SessionFactory createSessionFactory() {
+
+        Configuration configuration = getConfiguration();
+        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
+        builder.applySettings(configuration.getProperties());
+        ServiceRegistry serviceRegistry = builder.build();
+        return configuration.buildSessionFactory(serviceRegistry);
+
+    }
+
 
 }

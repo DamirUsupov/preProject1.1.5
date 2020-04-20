@@ -26,6 +26,7 @@ public class UserHibernateDAO implements UserDAO {
         return userHibernateDAO;
 
     }
+
     @Override
     public void addUser(User user) {
 

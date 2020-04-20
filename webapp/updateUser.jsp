@@ -11,7 +11,7 @@
 <body>
 <a hidden var="user" items="${user}" varStatus="st"></a>
 
-<form method="post" action="submit/">
+<form method="post" action="update">
     <p><label>Email</label>
     <p><input name="email" value="${user.email}">
 

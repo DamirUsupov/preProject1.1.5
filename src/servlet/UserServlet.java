@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/reg/*")
@@ -20,7 +21,11 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        getTable(request, response);
+        try {
+            getTable(request, response);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
     }
 
@@ -34,11 +39,15 @@ public class UserServlet extends javax.servlet.http.HttpServlet {
         if (!email.equals("") && !name.equals("") && !pass.equals(""))
             UserService.getInstance().addUser(new User(email, name, pass));
 
-        getTable(request, response);
+        try {
+            getTable(request, response);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
     }
 
-    private void getTable(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void getTable(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 
         List<User> users = UserService.getInstance().getAllUsers();
         request.setAttribute("users", users);

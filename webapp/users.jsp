@@ -44,7 +44,7 @@
 </div>
 
 <div id="right">
-    <form id="usersTable" method="post">
+    <form id="usersTable">
         <table border='1'>
             <tr>
                 <td>Id</td>
@@ -68,7 +68,7 @@
                     </td>
 
                     <td>
-                        <form method="post" action="update" class="formSize">
+                        <form method="get" action="update" class="formSize">
                             <button name="id" value="${user.id}">Update user</button>
                         </form>
                     </td>
