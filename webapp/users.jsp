@@ -79,7 +79,7 @@
                         </td>
 
                         <td>
-                            <form method="get" action="updtUser.jsp" class="formSize">
+                            <form method="get" action="/admin/update" class="formSize">
                                 <button name="id" value="${user.id}">Update user</button>
                             </form>
                         </td>

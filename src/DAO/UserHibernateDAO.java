@@ -118,8 +118,6 @@ public class UserHibernateDAO implements UserDAO {
 
                 setParameter("passPrm", pass);
         User userWithRole = (User) q.uniqueResult();
-        if (userWithRole == null)
-            return null;
 
         return userWithRole.getRole();
 
@@ -131,7 +129,8 @@ public class UserHibernateDAO implements UserDAO {
                 setParameter("emailPrm", email).
                 setParameter("passPrm", pass);
         User user = (User) q.uniqueResult();
-        return user == null;
+
+        return user != null;
     }
 
 

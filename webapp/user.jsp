@@ -5,7 +5,7 @@
 <body>
 <a hidden var="user" items=${loggedUser} varStatus="st"> </a>
 
-<form method="post">
+<form method="get" action="/exit">
 
     <p><label>Id: ${loggedUser.id}</label>
 
@@ -17,8 +17,7 @@
 
     <p>
 
-        <a href="/exit"> Exit </a>
-
+        <button> Exit </button>
 
 </form>
 </body>
