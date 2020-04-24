@@ -24,22 +24,19 @@ public class AdminServlet extends javax.servlet.http.HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String role = request.getParameter("role");
-        if (role.equals("ADMIN")) {
-            getTable(request, response);
-            String email = request.getParameter("email");
-            String name = request.getParameter("name");
-            String pass = request.getParameter("pass");
-            if (name != null && pass != null && email != null)
-                if (!email.equals("") && !name.equals("") && !pass.equals("")) {
 
-                    UserService.getInstance().addUser(new User(email, name, pass));
 
-                }
+        String email = request.getParameter("email");
+        String name = request.getParameter("name");
+        String pass = request.getParameter("pass");
+        if (name != null && pass != null && email != null) {
+            if (!email.equals("") && !name.equals("") && !pass.equals("")) {
 
-        } else {
-            response.sendRedirect("/users");
+                UserService.getInstance().addUser(new User(email, name, pass));
+
+            }
         }
+        getTable(request, response);
 
     }
 

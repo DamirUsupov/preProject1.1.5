@@ -22,7 +22,7 @@ public class UserDAOFactory {
     }
 
     public UserDAO getDAO() throws IOException {
-        String key = PropertyReader.getValueByKey("daoType");
+        String key = new PropertyReader().getValueByKey("daoType");
         if (key.equals("hibernate")) {
             return UserHibernateDAO.getInstanceUserDAO();
         } else if (key.equals("sql")) {

@@ -51,12 +51,14 @@ public class UserHibernateDAO implements UserDAO {
         Transaction tx = session.beginTransaction();
         Query q = session.createQuery("update User set email = :emailPrm, " +
                 "name = :namePrm, " +
-                "pass = :passPrm " +
+                "pass = :passPrm, " +
+                "role = :rolePrm " +
                 "where id = :idPrm").
                 setParameter("idPrm", user.getId()).
                 setParameter("emailPrm", user.getEmail()).
                 setParameter("namePrm", user.getName()).
-                setParameter("passPrm", user.getPass());
+                setParameter("passPrm", user.getPass()).
+                setParameter("rolePrm", user.getRole());
         q.executeUpdate();
         tx.commit();
 

@@ -1,21 +1,20 @@
 package util;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertyReader {
 
-    public static String getValueByKey(String key) throws IOException {
-//использовать classloader вместо file input stream
-        ClassLoader classLoader;
+    public String getValueByKey(String key) throws IOException {
 
-
-
-        FileInputStream fis;
+        InputStream inputStream;
         Properties properties = new Properties();
-        fis = new FileInputStream("app.properties");
-        properties.load(fis);
+        inputStream = this.getClass().getClassLoader().getResourceAsStream("app.properties");
+        properties.load(inputStream);
         return properties.getProperty(key);
+
     }
+
 }
+

@@ -32,7 +32,7 @@
     </style>
 </head>
 <body>
-<form method="get">
+<form method="post" action="/admin/users">
     <div id="left">
         <form method="post">
             <p><label>Email</label>
@@ -42,13 +42,16 @@
             <p><label>Password</label>
             <p><input name="pass">
             <p>
-            <form method="post">
                 <button>
                     Register
                 </button>
+
+            <p>
+            <form action="/exit" method="get">
+
+                    <button> Exit</button>
             </form>
 
-            <a href="/exit"> Exit </a>
         </form>
     </div>
 

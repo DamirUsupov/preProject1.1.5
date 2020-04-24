@@ -13,6 +13,10 @@
 
     <p><label>Password</label>
     <p><input name="pass" value=${user.pass}>
+
+    <p><label>Role</label>
+    <p><input name="role" value=${user.role}>
+
     <p>
         <button name="id" value=${user.id}>
             Update user

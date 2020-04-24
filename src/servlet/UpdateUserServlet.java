@@ -21,8 +21,9 @@ public class UpdateUserServlet extends HttpServlet {
         String email = request.getParameter("email");
         String name = request.getParameter("name");
         String pass = request.getParameter("pass");
-
-        UserService.getInstance().updateUser(new User(id, email, name, pass));
+        String role = request.getParameter("role");
+        User user = new User(id, email, name, pass, role);
+        UserService.getInstance().updateUser(user);
         response.sendRedirect("/admin/users");
 
     }
