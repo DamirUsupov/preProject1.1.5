@@ -26,6 +26,7 @@ public class UserFilter implements Filter {
             resp.sendRedirect("/login");
 
         } else if (session.getAttribute("role").equals("ADMIN") && uri.contains("/admin/")||
+                session.getAttribute("role").equals("ADMIN") && uri.contains("/user")||
                 session.getAttribute("role").equals("USER") && uri.contains("/user")) {
 
             chain.doFilter(req, resp);
