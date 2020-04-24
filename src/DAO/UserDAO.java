@@ -2,24 +2,26 @@ package DAO;
 
 import model.User;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDAO {
 
 
+    void addUser(User user);
 
-    void addUser(User user) throws SQLException;
+    void deleteUser(User user);
 
-    void deleteUser(User user) throws SQLException;
+    void updateUser(User user);
 
-    void updateUser(Long id, User user) throws SQLException;
+    List<User> getAllUsers();
 
-    List<User> getAllUsers() throws SQLException;
+    User getUserByEmailAndPass(String email, String Pass);
 
-   // Long getUserId(User user) throws SQLException;
+    User getUserById(Long id);
 
-    User getUserById(Long id) throws SQLException;
+    boolean userIsAdmin(String email, String pass);
 
-    //void updateUser(Long id, User user);
+    String getRole(String email, String pass);
+
+    boolean userIsExist(String email, String pass);
 }

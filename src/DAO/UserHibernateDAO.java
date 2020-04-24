@@ -46,14 +46,14 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
-    public void updateUser(Long id, User user) {
+    public void updateUser(User user) {
 
         Transaction tx = session.beginTransaction();
         Query q = session.createQuery("update User set email = :emailPrm, " +
                 "name = :namePrm, " +
                 "pass = :passPrm " +
                 "where id = :idPrm").
-                setParameter("idPrm", id).
+                setParameter("idPrm", user.getId()).
                 setParameter("emailPrm", user.getEmail()).
                 setParameter("namePrm", user.getName()).
                 setParameter("passPrm", user.getPass());
@@ -68,6 +68,14 @@ public class UserHibernateDAO implements UserDAO {
         new UserHibernateDAO(DBHelper.getSessionFactory());
         Query q = session.createQuery("FROM User");
         return q.list();
+    }
+
+    @Override
+    public User getUserByEmailAndPass(String email, String pass) {
+        Query q = session.createQuery("from User WHERE email = :emailPrm and pass = :passPrm")
+                .setParameter("emailPrm", email)
+                .setParameter("passPrm", pass);
+        return (User) q.uniqueResult();
     }
 
     /*@Override
@@ -90,6 +98,40 @@ public class UserHibernateDAO implements UserDAO {
 
         return (User) q.uniqueResult();
 
+    }
+
+    @Override
+    public boolean userIsAdmin(String email, String pass) {
+        Query q = session.createQuery("from User WHERE email = :emailPrm and pass = :passPrm").
+                setParameter("emailPrm", email).
+                setParameter("passPrm", pass);
+        User userWithRole = (User) q.uniqueResult();
+
+        return userWithRole.getRole().equals("ADMIN");
+    }
+
+    @Override
+    public String getRole(String email, String pass) {
+
+        Query q = session.createQuery("from User WHERE email = :emailPrm and pass = :passPrm").
+                setParameter("emailPrm", email).
+
+                setParameter("passPrm", pass);
+        User userWithRole = (User) q.uniqueResult();
+        if (userWithRole == null)
+            return null;
+
+        return userWithRole.getRole();
+
+    }
+
+    @Override
+    public boolean userIsExist(String email, String pass) {
+        Query q = session.createQuery("from User WHERE email = :emailPrm and pass = :passPrm").
+                setParameter("emailPrm", email).
+                setParameter("passPrm", pass);
+        User user = (User) q.uniqueResult();
+        return user == null;
     }
 
 
