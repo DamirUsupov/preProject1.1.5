@@ -23,9 +23,6 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    @Column(name = "auth")
-    private boolean auth;
-
     public User() {
 
     }
@@ -41,15 +38,6 @@ public class User {
         this.email = email;
         this.name = name;
         this.pass = pass;
-    }
-
-    public User(Long id, String email, String name, String pass, String role, boolean auth) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.pass = pass;
-        this.role = role;
-
     }
 
     public User(long id, String email, String name, String pass, String role) {

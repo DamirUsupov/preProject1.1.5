@@ -74,7 +74,7 @@ public class UserHibernateDAO implements UserDAO {
 
     @Override
     public User getUserByEmailAndPass(String email, String pass) {
-        Query q = session.createQuery("from User WHERE email = :emailPrm and pass = :passPrm")
+        Query q = session.createQuery("FROM User WHERE email = :emailPrm and pass = :passPrm")
                 .setParameter("emailPrm", email)
                 .setParameter("passPrm", pass);
         return (User) q.uniqueResult();

@@ -12,7 +12,8 @@ import java.util.List;
 public class UserJdbcDAO implements UserDAO {
 
     private static UserJdbcDAO userJdbcDAO;
-    private        Connection  connection;
+
+    private Connection connection;
 
     public UserJdbcDAO(Connection connection) {
         this.connection = connection;
@@ -69,6 +70,22 @@ public class UserJdbcDAO implements UserDAO {
         }
     }
 
+    /*@Override
+    public Long getUserId(User user) throws SQLException {
+
+        String query = "SELECT id FROM user WHERE email = ? AND name = ? AND pass = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, user.getEmail());
+        statement.setString(2, user.getName());
+        statement.setString(3, user.getPass());
+        ResultSet result = statement.executeQuery();
+        result.next();
+        Long id = result.getLong(1);
+        result.close();
+        statement.close();
+        return id;
+    }*/
+
     @Override
     public List<User> getAllUsers() {
         List<User> usersLst = null;
@@ -94,25 +111,29 @@ public class UserJdbcDAO implements UserDAO {
     }
 
     @Override
-    public User getUserByEmailAndPass(String email, String Pass) {
-        return null;
+    public User getUserByEmailAndPass(String email, String pass) {
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        User user = null;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM User WHERE email = ? AND pass = ?");
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, pass);
+
+            rs = preparedStatement.executeQuery();
+            rs.next();
+            user = new User(Long.parseLong(rs.getString(1)),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5));
+            preparedStatement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return user;
     }
-
-    /*@Override
-    public Long getUserId(User user) throws SQLException {
-
-        String query = "SELECT id FROM user WHERE email = ? AND name = ? AND pass = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, user.getEmail());
-        statement.setString(2, user.getName());
-        statement.setString(3, user.getPass());
-        ResultSet result = statement.executeQuery();
-        result.next();
-        Long id = result.getLong(1);
-        result.close();
-        statement.close();
-        return id;
-    }*/
 
     @Override
     public User getUserById(Long id) {
@@ -156,29 +177,34 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public String getRole(String email, String pass) {
-        String res = "USER";
-        try {
-            String query = "SELECT id FROM user WHERE email = ? AND pass = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, email);
-            statement.setString(2, pass);
-            ResultSet result = statement.executeQuery();
-            result.next();
-            String role = result.getString(5);
-            result.close();
-            statement.close();
-            if (role.equals("ADMIN")) {
-                res = "ADMIN";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return res;
+        return getUserByEmailAndPass(email, pass).getRole();
     }
 
     @Override
     public boolean userIsExist(String email, String pass) {
-        return false;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        User user = null;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM User WHERE email = ? AND pass = ?");
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, pass);
+
+            rs = preparedStatement.executeQuery();
+            rs.next();
+            user = new User(Long.parseLong(rs.getString(1)),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5));
+            preparedStatement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return user != null;
+
+
     }
 
 

@@ -29,6 +29,10 @@
             padding-left: 10px;
         }
 
+        button {
+            width: 90px;
+        }
+
     </style>
 </head>
 <body>
@@ -45,14 +49,16 @@
                 <button>
                     Register
                 </button>
-
-            <p>
-            <form action="/exit" method="get">
-
-                    <button> Exit</button>
-            </form>
-
         </form>
+
+        <form action="/exit" method="get">
+            <p>
+                <button>
+                    Exit
+                </button>
+        </form>
+
+
     </div>
 
     <div id="right">

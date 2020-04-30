@@ -3,17 +3,17 @@
 <html>
 <title>UserUpdate</title>
 <body>
-<a hidden var="user" items=${loggedUser} varStatus="st"> </a>
+<a hidden var="user" items=${user} varStatus="st"> </a>
 
 <form method="get" action="/exit">
 
-    <p><label>Id: ${loggedUser.id}</label>
+    <p><label>Id: ${user.id}</label>
 
-    <p><label>Email: ${loggedUser.email}</label>
+    <p><label>Email: ${user.email}</label>
 
-    <p><label>Name: ${loggedUser.name}</label>
+    <p><label>Name: ${user.name}</label>
 
-    <p><label>Password: ${loggedUser.pass}</label>
+    <p><label>Password: ${user.pass}</label>
 
     <p>
 

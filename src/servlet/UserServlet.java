@@ -10,12 +10,12 @@ import java.io.IOException;
 
 @WebServlet("/user/*")
 public class UserServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user.jsp");
-        requestDispatcher.forward(request,response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("user",request.getSession().getAttribute("loggedUser"));
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("user.jsp");
         requestDispatcher.forward(request,response);
     }

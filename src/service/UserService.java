@@ -68,9 +68,11 @@ public class UserService {
     public boolean userIsExist(String email, String pass) {
         return userDAO.userIsExist(email, pass);
     }
+
     /*public Long getUserId(User user) throws SQLException {
 
         return userDAO.getUserId(user);
 
     }*/
+
 }
